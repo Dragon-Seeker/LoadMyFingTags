@@ -27,14 +27,14 @@ public class TagGroupLoaderMixin<T> {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     @Unique
-    private static Identifier currentTagId;
+    private static final ThreadLocal<Identifier> currentTagId = ThreadLocal.withInitial(() -> new Identifier("", ""));
 
     @Inject(method = "method_43952", at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void preventTagsFromFailingToLoad(TagEntry.ValueGetter<T> valueGetter, List<TagGroupLoader.TrackedEntry> list, CallbackInfoReturnable<Either<Collection<TagGroupLoader.TrackedEntry>, Collection<T>>> cir, ImmutableSet.Builder builder, List<TagGroupLoader.TrackedEntry> list2){
         if(!list2.isEmpty()){
             LOGGER.error(
                 "[Load My Fucking Tags] Couldn't load certain entries with the tag {}: {}",
-                currentTagId,
+                currentTagId.get(),
                 list2.stream().map(Objects::toString).collect(Collectors.joining(", "))
             );
 
@@ -44,8 +44,8 @@ public class TagGroupLoaderMixin<T> {
         }
     }
 
-    @Inject(method = "method_32838", at = @At("HEAD"))
-    private void saveTagId(Map<Identifier, List<TagGroupLoader.TrackedEntry>> map, Multimap<Identifier, Identifier> multimap, Set<Identifier> set, TagEntry.ValueGetter<T> valueGetter, Map<Identifier, Collection<T>>  map2, Identifier identifier, CallbackInfo ci){
-        currentTagId = identifier;
+    @Inject(method = "method_32841", at = @At("HEAD"))
+    private void saveTagId(TagEntry.ValueGetter valueGetter, Map map, Identifier identifier, List list, CallbackInfo ci){
+        currentTagId.set(identifier);
     }
 }
