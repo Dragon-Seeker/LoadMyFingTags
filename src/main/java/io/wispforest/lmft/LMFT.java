@@ -4,13 +4,8 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class LMFT implements ModInitializer {
-
-	private static final Logger LOGGER = LogManager.getLogger(LMFT.class);
 
 	public static final String MODID = "lmft";
 
@@ -27,11 +22,5 @@ public class LMFT implements ModInitializer {
 				handler.player.sendMessage(errorText, false);
 			}
 		});
-	}
-
-	public static void tagsAreCooked(Identifier identifier){
-		areTagsCooked = true;
-
-		LOGGER.info("[{}]{}", MODID, identifier);
 	}
 }
