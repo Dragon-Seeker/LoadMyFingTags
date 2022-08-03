@@ -11,14 +11,14 @@ public class LMFT implements ModInitializer {
 
 	public static boolean areTagsCooked = false;
 
-	public static boolean outputErrorMessageIngame = Boolean.getBoolean("lmft.error_output");
+	public static boolean disableOutputErrorMessageIngame = Boolean.getBoolean("lmft.disable_error_output");
 
 	public static final Text errorText = Text.literal("[Load My Fucking Tags]: It seems that some tags are a bit cooked, Look at the Logs for more Info if certain Functions are broken!").formatted(Formatting.RED, Formatting.BOLD);
 
 	@Override
 	public void onInitialize() {
 		ServerPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-			if(areTagsCooked && !outputErrorMessageIngame){
+			if(areTagsCooked && !disableOutputErrorMessageIngame){
 				handler.player.sendMessage(errorText, false);
 			}
 		});
