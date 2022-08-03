@@ -8,7 +8,8 @@ import io.wispforest.lmft.LMFT;
 import net.minecraft.tag.TagEntry;
 import net.minecraft.tag.TagGroupLoader;
 import net.minecraft.util.Identifier;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 public class TagGroupLoaderMixin<T> {
 
     @Unique
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger("LMFT-TagGroupLoader");
 
     @Unique
     private static Identifier currentTagId;
@@ -40,7 +41,7 @@ public class TagGroupLoaderMixin<T> {
 
             list2.clear();
 
-            LMFT.areTagsCooked = true;
+            LMFT.tagsAreCooked(currentTagId);
         }
     }
 
