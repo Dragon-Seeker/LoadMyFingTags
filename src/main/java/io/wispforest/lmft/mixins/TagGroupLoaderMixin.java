@@ -5,8 +5,8 @@ import com.google.common.collect.Multimap;
 import com.mojang.datafixers.util.Either;
 import com.mojang.logging.LogUtils;
 import io.wispforest.lmft.LMFT;
-import net.minecraft.tag.TagEntry;
-import net.minecraft.tag.TagGroupLoader;
+import net.minecraft.registry.tag.TagEntry;
+import net.minecraft.registry.tag.TagGroupLoader;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,7 +29,7 @@ public class TagGroupLoaderMixin<T> {
     @Unique
     private static final ThreadLocal<Identifier> currentTagId = ThreadLocal.withInitial(() -> new Identifier("", ""));
 
-    @Inject(method = "method_43952", at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "resolveAll(Lnet/minecraft/registry/tag/TagEntry$ValueGetter;Ljava/util/List;)Lcom/mojang/datafixers/util/Either;", at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void preventTagsFromFailingToLoad(TagEntry.ValueGetter<T> valueGetter, List<TagGroupLoader.TrackedEntry> list, CallbackInfoReturnable<Either<Collection<TagGroupLoader.TrackedEntry>, Collection<T>>> cir, ImmutableSet.Builder builder, List<TagGroupLoader.TrackedEntry> list2){
         if(!list2.isEmpty()){
             LOGGER.error(
