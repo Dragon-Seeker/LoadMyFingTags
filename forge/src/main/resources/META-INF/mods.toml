@@ -1,0 +1,28 @@
+modLoader = "javafml"
+loaderVersion = "[45,)"
+#issueTrackerURL = ""
+license = "CC0-1.0"
+
+[[mods]]
+modId = "lmft"
+version = "${version}"
+displayName = "Load My Fucking Tags"
+authors = "Blodhgarm"
+description = '''
+Simple mod that makes Tag Loading less of a Pain
+'''
+logoFile = "assets/lmft/icon.png"
+
+[[dependencies.lmft]]
+modId = "forge"
+mandatory = true
+versionRange = "[45,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.lmft]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.4,)"
+ordering = "NONE"
+side = "BOTH"

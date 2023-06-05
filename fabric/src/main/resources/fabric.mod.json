@@ -10,7 +10,7 @@
   ],
   "contact": {
     "homepage": "",
-    "sources": ""
+    "sources": "https://github.com/Dragon-Seeker/LoadMyFuckingTags"
   },
 
   "license": "CC0-1.0",
@@ -19,17 +19,15 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.wispforest.lmft.LMFT"
+      "io.wispforest.lmft.fabric.LMFTFabric"
     ]
   },
   "mixins": [
-    "lmft.mixins.json"
+    "lmft.mixins.json",
+    "lmft-common.mixins.json"
   ],
-
   "depends": {
-    "fabricloader": ">=0.14.6",
     "fabric": "*",
-    "minecraft": "~1.19",
-    "java": ">=17"
+    "minecraft": ">=1.19.4"
   }
 }

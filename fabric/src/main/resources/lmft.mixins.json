@@ -1,12 +1,11 @@
 {
   "required": true,
-  "minVersion": "0.8",
-  "package": "io.wispforest.lmft.mixins",
+  "package": "io.wispforest.lmft.fabric.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-    "TagGroupLoaderMixin"
-  ],
+  "minVersion": "0.8",
   "client": [
+  ],
+  "mixins": [
   ],
   "injectors": {
     "defaultRequire": 1
