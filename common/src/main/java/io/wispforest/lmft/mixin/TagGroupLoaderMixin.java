@@ -40,8 +40,8 @@ public class TagGroupLoaderMixin<T> {
         LMFTCommon.areTagsCooked = true;
     }
 
-    @Inject(method = "method_32841", at = @At("HEAD"))
-    private void saveTagId(TagEntry.ValueGetter valueGetter, Map map, Identifier identifier, List list, CallbackInfo ci){
-        currentTagId.set(identifier);
+    @Inject(method = "method_51476", at = @At("HEAD"))
+    private void saveTagId(TagEntry.ValueGetter valueGetter, Map map, Identifier id, TagGroupLoader.TagDependencies dependencies, CallbackInfo ci){
+        currentTagId.set(id);
     }
 }
