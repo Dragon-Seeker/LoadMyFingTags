@@ -3,10 +3,10 @@
   "package": "io.wispforest.lmft.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "client": [
+  "mixins": [
     "TagGroupLoaderMixin"
   ],
-  "mixins": [
+  "client": [
   ],
   "injectors": {
     "defaultRequire": 1
