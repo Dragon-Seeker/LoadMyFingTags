@@ -11,6 +11,6 @@ public class LMFTForge {
         LMFTCommon.init();
 
         MinecraftForge.EVENT_BUS
-                .addListener((PlayerEvent.PlayerLoggedInEvent e) -> LMFTCommon.sendMessage(e.getEntity()));
+                .addListener((PlayerEvent.PlayerLoggedInEvent e) -> LMFTCommon.sendMessage(e.getPlayer()));
     }
 }

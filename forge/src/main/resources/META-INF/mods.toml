@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[41,)"
+loaderVersion = "[40,)"
 #issueTrackerURL = ""
 license = "CC0-1.0"
 
@@ -16,13 +16,13 @@ logoFile = "assets/lmft/icon.png"
 [[dependencies.lmft]]
 modId = "forge"
 mandatory = true
-versionRange = "[41,)"
+versionRange = "[40,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.lmft]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19,)"
+versionRange = "[1.18.2,)"
 ordering = "NONE"
 side = "BOTH"
