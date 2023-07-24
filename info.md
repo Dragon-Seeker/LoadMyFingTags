@@ -9,4 +9,6 @@ If you are the developer of said modification, then you can quickly look within 
 You can either contact the person who is adding the broken entry to a tag or just ignore it if such isn't majorly needed. 
 LMFT is taking care of not breaking the entire tag allowing you to continue playing the game without much care about it being completely broken.
 
-For anyone who wants to remove the warning from chat, you can include this var arg within the JVM Arguments on the server and/or client: `-Dlmft.disable_error_output=true`
+For anyone who wants to remove the warning from chat here are the following steps to disable the message:
+- By default there is builtin config file that will be generated if non exist which allows you to disable such by changing `"disableIngameError"` to `"true"`
+- You can include this var arg within the JVM Arguments on the server and/or client also: `-Dlmft.disable_error_output=true`
