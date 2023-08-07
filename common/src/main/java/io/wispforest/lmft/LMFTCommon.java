@@ -60,7 +60,7 @@ public class LMFTCommon {
         entity.sendMessage(
                 new LiteralText("[Load My F***ing Tags]: It seems that some tags are a bit cooked. Look at the Logs for more details on broken functions. Click me for more info about this feature.")
                         .styled(style -> {
-                            return style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Dragon-Seeker/LoadMyFingTags/blob/ae915c6453f0537e12604e3b0c3d0c378b2dfd88/info.md"));
+                            return style.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/Dragon-Seeker/LoadMyFingTags/blob/3961e898550c4d996199bea0fa408a61e87e8dba/info.md"));
                         })
                         .formatted(Formatting.RED, Formatting.BOLD),
                 false
