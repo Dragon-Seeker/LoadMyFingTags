@@ -41,7 +41,7 @@ public class TagGroupLoaderMixin<T> {
         LMFTCommon.areTagsCooked = true;
     }
 
-    @Inject(method = "lambda$build$6", at = @At("HEAD"))
+    @Inject(method = "lambda$build$6", at = @At("HEAD"), remap = false)
     private void saveTagId(TagEntry.ValueGetter valueGetter, Map map, Identifier id, TagGroupLoader.TagDependencies dependencies, CallbackInfo ci){
         currentTagId.set(id);
     }
