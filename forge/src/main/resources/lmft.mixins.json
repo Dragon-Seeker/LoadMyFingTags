@@ -6,6 +6,7 @@
   "client": [
   ],
   "mixins": [
+    "TagGroupLoaderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

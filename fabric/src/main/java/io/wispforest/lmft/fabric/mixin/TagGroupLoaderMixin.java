@@ -1,4 +1,4 @@
-package io.wispforest.lmft.mixin;
+package io.wispforest.lmft.fabric.mixin;
 
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Either;
@@ -16,7 +16,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Mixin(TagGroupLoader.class)
