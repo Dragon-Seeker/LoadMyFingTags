@@ -27,7 +27,7 @@ public class TagGroupLoaderMixin<T> {
     @Unique private static final ThreadLocal<Identifier> currentTagId = ThreadLocal.withInitial(() -> new Identifier("", ""));
 
     @Inject(method = "resolveAll(Lnet/minecraft/registry/tag/TagEntry$ValueGetter;Ljava/util/List;)Lcom/mojang/datafixers/util/Either;", at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void preventTagsFromFailingToLoad(TagEntry.ValueGetter<T> valueGetter, List<TagGroupLoader.TrackedEntry> list, CallbackInfoReturnable<Either<Collection<TagGroupLoader.TrackedEntry>, Collection<T>>> cir, HashSet builder, List<TagGroupLoader.TrackedEntry> list2){
+    private void preventTagsFromFailingToLoad(TagEntry.ValueGetter<T> valueGetter, List<TagGroupLoader.TrackedEntry> list, CallbackInfoReturnable<Either<Collection<TagGroupLoader.TrackedEntry>, Collection<T>>> cir, LinkedHashSet builder, List<TagGroupLoader.TrackedEntry> list2){
         if(list2.isEmpty()) return;
 
         LOGGER.error(
