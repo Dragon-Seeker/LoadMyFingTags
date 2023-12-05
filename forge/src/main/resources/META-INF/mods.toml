@@ -16,7 +16,7 @@ logoFile = "assets/lmft/icon.png"
 [[dependencies.lmft]]
 modId = "forge"
 mandatory = true
-versionRange = "[47.1.44,)"
+versionRange = "[47.2.6,)"
 ordering = "NONE"
 side = "BOTH"
 
