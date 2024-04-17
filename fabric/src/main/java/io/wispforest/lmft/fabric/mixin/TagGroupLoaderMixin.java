@@ -33,7 +33,7 @@ public class TagGroupLoaderMixin<T> {
         if(list2.isEmpty()) return;
 
         LOGGER.error(
-                "[Load My Fucking Tags] Couldn't load certain entries with the tag {}: {}",
+                "[Load My F***ing Tags] Couldn't load certain entries with the tag {}: {}",
                 currentTagId.get(),
                 list2.stream().map(Objects::toString).collect(Collectors.joining(", "))
         );
