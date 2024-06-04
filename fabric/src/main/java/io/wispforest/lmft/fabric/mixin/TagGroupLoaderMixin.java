@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class TagGroupLoaderMixin<T> {
 
     @Unique private static final Logger LOGGER = LogUtils.getLogger();
-    @Unique private static final ThreadLocal<Identifier> currentTagId = ThreadLocal.withInitial(() -> new Identifier("", ""));
+    @Unique private static final ThreadLocal<Identifier> currentTagId = ThreadLocal.withInitial(() -> Identifier.of("", ""));
 
     @Inject(method = "resolveAll(Lnet/minecraft/registry/tag/TagEntry$ValueGetter;Ljava/util/List;)Lcom/mojang/datafixers/util/Either;", at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void preventTagsFromFailingToLoad(TagEntry.ValueGetter<T> valueGetter, List<TagGroupLoader.TrackedEntry> list, CallbackInfoReturnable<Either<Collection<TagGroupLoader.TrackedEntry>, Collection<T>>> cir, ImmutableSet.Builder builder, List<TagGroupLoader.TrackedEntry> list2){
