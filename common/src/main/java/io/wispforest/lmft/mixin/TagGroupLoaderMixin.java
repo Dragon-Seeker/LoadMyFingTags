@@ -1,12 +1,14 @@
-package io.wispforest.lmft.fabric.mixin;
+package io.wispforest.lmft.mixin;
 
 import com.google.common.collect.ImmutableSet;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.datafixers.util.Either;
 import com.mojang.logging.LogUtils;
 import io.wispforest.lmft.LMFTCommon;
-import net.minecraft.registry.tag.TagEntry;
-import net.minecraft.registry.tag.TagGroupLoader;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagEntry;
+import net.minecraft.tags.TagLoader;
+import org.intellij.lang.annotations.Identifier;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -22,14 +24,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Mixin(TagGroupLoader.class)
+@Mixin(TagLoader.class)
 public class TagGroupLoaderMixin<T> {
 
     @Unique private static final Logger LOGGER = LogUtils.getLogger();
-    @Unique private static final ThreadLocal<Identifier> currentTagId = ThreadLocal.withInitial(() -> Identifier.of("", ""));
+    @Unique private static final ThreadLocal<ResourceLocation> currentTagId = ThreadLocal.withInitial(() -> ResourceLocation.fromNamespaceAndPath("", ""));
 
-    @Inject(method = "resolveAll(Lnet/minecraft/registry/tag/TagEntry$ValueGetter;Ljava/util/List;)Lcom/mojang/datafixers/util/Either;", at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void preventTagsFromFailingToLoad(TagEntry.ValueGetter<T> valueGetter, List<TagGroupLoader.TrackedEntry> list, CallbackInfoReturnable<Either<Collection<TagGroupLoader.TrackedEntry>, Collection<T>>> cir, ImmutableSet.Builder builder, List<TagGroupLoader.TrackedEntry> list2){
+    @Inject(method = "tryBuildTag(Lnet/minecraft/tags/TagEntry$Lookup;Ljava/util/List;)Lcom/mojang/datafixers/util/Either;", at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
+    private void preventTagsFromFailingToLoad(TagEntry.Lookup<T> valueGetter, List<TagLoader.EntryWithSource> list, CallbackInfoReturnable<Either<Collection<TagLoader.EntryWithSource>, Collection<T>>> cir, @Local(ordinal = 1) List<TagLoader.EntryWithSource> list2){
         if(list2.isEmpty()) return;
 
         LOGGER.error(
@@ -43,8 +45,8 @@ public class TagGroupLoaderMixin<T> {
         LMFTCommon.areTagsCooked = true;
     }
 
-    @Inject(method = "method_51476", at = @At("HEAD"))
-    private void saveTagId(TagEntry.ValueGetter valueGetter, Map map, Identifier id, TagGroupLoader.TagDependencies dependencies, CallbackInfo ci){
+    @Inject(method = { "method_51476", "lambda$build$6" }, at = @At("HEAD"), require = 1, allow = 1)
+    private void saveTagId(TagEntry.Lookup lookup, Map map, ResourceLocation id, TagLoader.SortingEntry sortingEntry, CallbackInfo ci){
         currentTagId.set(id);
     }
 }

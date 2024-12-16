@@ -14,19 +14,17 @@ Simple mod that makes Tag Loading less of a Pain
 logoFile = "assets/lmft/icon.png"
 [[mixins]]
 config = 'lmft-common.mixins.json'
-[[mixins]]
-config = 'lmft.mixins.json'
 
 [[dependencies.lmft]]
 modId = "neoforge"
 required = true
-versionRange = "[20,)"
+versionRange = "[21,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.lmft]]
 modId = "minecraft"
 required = true
-versionRange = "[1.20,)"
+versionRange = "[1.21,)"
 ordering = "NONE"
 side = "BOTH"

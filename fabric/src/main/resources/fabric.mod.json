@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "lmft",
   "version": "${version}",
-
   "name": "Load My F***ing Tags",
   "description": "Simple mod that makes Tag Loading less of a Pain",
   "authors": [
@@ -12,10 +11,8 @@
     "homepage": "",
     "sources": "https://github.com/Dragon-Seeker/LoadMyFuckingTags"
   },
-
   "license": "CC0-1.0",
   "icon": "assets/lmft/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -23,11 +20,10 @@
     ]
   },
   "mixins": [
-    "lmft.mixins.json",
     "lmft-common.mixins.json"
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": "*"
+    "minecraft": "~1.21"
   }
 }
