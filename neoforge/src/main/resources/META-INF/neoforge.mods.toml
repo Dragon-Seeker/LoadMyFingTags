@@ -14,6 +14,8 @@ Simple mod that makes Tag Loading less of a Pain
 logoFile = "assets/lmft/icon.png"
 [[mixins]]
 config = 'lmft-common.mixins.json'
+[[mixins]]
+config = 'lmft-neoforge.mixins.json'
 
 [[dependencies.lmft]]
 modId = "neoforge"

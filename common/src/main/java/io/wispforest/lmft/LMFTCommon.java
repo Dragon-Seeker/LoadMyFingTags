@@ -28,6 +28,7 @@ public class LMFTCommon {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static boolean disableIngameError = Boolean.getBoolean("lmft.disable_error_output");
+    private static boolean showToOnlyPrivileged = false;
 
     public static void init(Path configPath) {
         File configFile = new File(configPath + File.separator + "lmft.json");
@@ -41,6 +42,7 @@ public class LMFTCommon {
 
                 configObject = new JsonObject();
                 configObject.addProperty("disableIngameError", false);
+                configObject.addProperty("showToOnlyPrivileged", false);
 
                 try (FileWriter writer = new FileWriter(configFile)) {  writer.write(GSON.toJson(configObject)); }
             } else {
@@ -56,11 +58,21 @@ public class LMFTCommon {
             LOGGER.error("[LMFT]: Unable to read the needed config file, using default values!", exception);
         }
 
-        if(configObject != null && configObject.has("disableIngameError")) disableIngameError = disableIngameError || configObject.get("disableIngameError").getAsBoolean();
+        if(configObject != null) {
+            if (configObject.has("disableIngameError")) {
+                disableIngameError = disableIngameError || configObject.get("disableIngameError").getAsBoolean();
+            }
+
+            if (configObject.has("showToOnlyPrivileged")) {
+                showToOnlyPrivileged = configObject.get("showToOnlyPrivileged").getAsBoolean();
+            }
+        }
     }
 
     public static void sendMessage(Player entity){
-        if(!LMFTCommon.areTagsCooked || LMFTCommon.disableIngameError) return;
+        if (!LMFTCommon.areTagsCooked || LMFTCommon.disableIngameError) return;
+
+        if (LMFTCommon.showToOnlyPrivileged && entity.getPermissionLevel() <= 0) return;
 
         entity.displayClientMessage(
                 Component.empty()

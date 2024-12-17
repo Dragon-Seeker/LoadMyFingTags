@@ -1,6 +1,5 @@
 package io.wispforest.lmft.mixin;
 
-import com.google.common.collect.ImmutableSet;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.datafixers.util.Either;
 import com.mojang.logging.LogUtils;
@@ -8,7 +7,6 @@ import io.wispforest.lmft.LMFTCommon;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagEntry;
 import net.minecraft.tags.TagLoader;
-import org.intellij.lang.annotations.Identifier;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +27,7 @@ public class TagGroupLoaderMixin<T> {
     @Unique private static final Logger LOGGER = LogUtils.getLogger();
     @Unique private static final ThreadLocal<ResourceLocation> currentTagId = ThreadLocal.withInitial(() -> ResourceLocation.fromNamespaceAndPath("", ""));
 
-    @Inject(method = "tryBuildTag(Lnet/minecraft/tags/TagEntry$Lookup;Ljava/util/List;)Lcom/mojang/datafixers/util/Either;", at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z"), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "tryBuildTag(Lnet/minecraft/tags/TagEntry$Lookup;Ljava/util/List;)Lcom/mojang/datafixers/util/Either;", at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z"))
     private void preventTagsFromFailingToLoad(TagEntry.Lookup<T> valueGetter, List<TagLoader.EntryWithSource> list, CallbackInfoReturnable<Either<Collection<TagLoader.EntryWithSource>, Collection<T>>> cir, @Local(ordinal = 1) List<TagLoader.EntryWithSource> list2){
         if(list2.isEmpty()) return;
 
