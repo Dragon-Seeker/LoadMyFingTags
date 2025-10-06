@@ -14,11 +14,7 @@
   "license": "CC0-1.0",
   "icon": "assets/lmft/icon.png",
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "io.wispforest.lmft.fabric.LMFTFabric"
-    ]
-  },
+  "entrypoints": {},
   "mixins": [
     "lmft-common.mixins.json"
   ],

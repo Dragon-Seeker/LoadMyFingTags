@@ -1,4 +1,4 @@
-package io.wispforest.lmft.forge.mixin;
+package io.wispforest.lmft.mixin;
 
 import io.wispforest.lmft.LMFTCommon;
 import net.minecraft.server.MinecraftServer;
@@ -12,9 +12,8 @@ import java.util.concurrent.CompletableFuture;
 
 @Mixin(MinecraftServer.class)
 public abstract class MinecraftServerMixin {
-
     @Inject(method = "reloadResources", at = @At("HEAD"))
     private void startResourceReload(Collection<String> collection, CallbackInfoReturnable<CompletableFuture<Void>> cir) {
-        LMFTCommon.areTagsCooked = false;
+        LMFTCommon.liftCookedTagState();
     }
 }
