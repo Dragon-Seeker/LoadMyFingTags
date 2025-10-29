@@ -16,10 +16,11 @@
   "environment": "*",
   "entrypoints": {},
   "mixins": [
-    "lmft-common.mixins.json"
+    "lmft-common.mixins.json",
+    "lmft-fabric.mixins.json"
   ],
   "depends": {
-    "fabric": "*",
-    "minecraft": "~1.21"
+    "fabricloader": ">=0.15",
+    "minecraft": ">=1.17.1"
   }
 }

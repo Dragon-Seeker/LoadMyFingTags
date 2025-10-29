@@ -11,7 +11,7 @@ authors = "Blodhgarm"
 description = '''
 Simple mod that makes Tag Loading less of a Pain
 '''
-logoFile = "assets/lmft/icon.png"
+logoFile = "icon.png"
 [[mixins]]
 config = 'lmft-common.mixins.json'
 

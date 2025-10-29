@@ -1,7 +1,8 @@
 {
   "required": true,
-  "package": "io.wispforest.lmft.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "plugin": "io.wispforest.lmft.forge.mixin.LMFTMixinConfig",
+  "package": "io.wispforest.lmft.forge.mixin",
+  "compatibilityLevel": "JAVA_16",
   "minVersion": "0.8",
   "mixins": [
     "MinecraftServerMixin",
@@ -9,8 +10,7 @@
     "TagBuilderMixin",
     "PlayerListMixin"
   ],
-  "client": [
-  ],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }

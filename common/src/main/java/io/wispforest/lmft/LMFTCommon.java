@@ -4,31 +4,38 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.mojang.logging.LogUtils;
+import io.netty.util.internal.logging.Log4J2LoggerFactory;
+import io.wispforest.lmft.utils.ClickEventUtils;
+import io.wispforest.lmft.utils.ComponentUtils;
+import io.wispforest.lmft.utils.PathUtils;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import org.apache.logging.slf4j.Log4jLogger;
+import org.apache.logging.slf4j.Log4jLoggerFactory;
+import org.apache.logging.slf4j.SLF4JServiceProvider;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.NOPLoggerFactory;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static io.wispforest.lmft.utils.ComponentUtils.*;
 
 public class LMFTCommon {
 
     private static boolean areTagsCooked = false;
 
     public static final String MODID = "lmft";
-    public static final String PREFIX = "[Load My F***ing Tags]:";
+    public static final String PREFIX = "[Load My F***ing Tags]: ";
 
-    public static final Logger LOGGER = LogUtils.getLogger();
+    public static Logger LOGGER = LoggerFactory.getLogger(LMFTCommon.class);
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
@@ -75,6 +82,8 @@ public class LMFTCommon {
             } catch (JsonSyntaxException exception) {
                 LOGGER.error(PREFIX + "Unable to read the needed config file, using default values!", exception);
             }
+        } else {
+            LOGGER.error(PREFIX + "Unable to locate any path needed to load the config file, using default values!");
         }
 
         if(configObject == null) return;
@@ -89,30 +98,40 @@ public class LMFTCommon {
     }
 
     public static void sendMessage(Player entity){
-        if (!areTagsCooked || disableIngameError || (showToOnlyPrivileged && entity.getPermissionLevel() <= 0)) return;
+        if (!areTagsCooked) return;
 
-        entity.displayClientMessage(
-            Component.empty()
-                .append(
-                    Component.literal(PREFIX + "It seems that some tags are a bit cooked. Look at the Logs for more details on broken functions. ")
-                        .withStyle(ChatFormatting.RED, ChatFormatting.BOLD)
-                ).append(
-                    Component.literal("Click me for more info about this feature.")
-                        .withStyle(ChatFormatting.AQUA)
-                        .withStyle(style -> style.withClickEvent(new ClickEvent.OpenUrl(URI.create("https://github.com/Dragon-Seeker/LoadMyFingTags/blob/3961e898550c4d996199bea0fa408a61e87e8dba/info.md"))))
-                ),
-            false
-        );
+        LOGGER.error(PREFIX + "It seems that some tags are a bit cooked. Look at the Logs for more details on broken functions. ");
+
+        if (disableIngameError || (showToOnlyPrivileged && entity.hasPermissions(1))) return;
+
+        if (canCreateMessages()) {
+            var message = createMutableComponent("");
+
+            append(
+                message,
+                withStyle(createMutableComponent(PREFIX + "It seems that some tags are a bit cooked. Look at the Logs for more details on broken functions. "), ChatFormatting.RED, ChatFormatting.BOLD)
+            );
+
+            append(
+                message,
+                withStyle(
+                    withStyle(createMutableComponent("Click me for more info about this feature."), ChatFormatting.AQUA),
+                    style -> ClickEventUtils.addUrlToStyle(style, "https://github.com/Dragon-Seeker/LoadMyFingTags/blob/3961e898550c4d996199bea0fa408a61e87e8dba/info.md")
+                )
+            );
+
+            entity.displayClientMessage(message, false);
+        }
     }
 
-    private static final ThreadLocal<ResourceLocation> CURRENT_LOADING_TAG_ENTRY = ThreadLocal.withInitial(() -> ResourceLocationUtils.fromNamespaceAndPath("", ""));
+    private static final ThreadLocal<String> CURRENT_LOADING_TAG_ENTRY = ThreadLocal.withInitial(() -> "lmft:unknown_tag_id");
 
     public static void handleAndLogInvalidEntries(List<?> invalidEntries) {
         if(invalidEntries.isEmpty()) return;
 
         var id = CURRENT_LOADING_TAG_ENTRY.get();
 
-        if (id == null) id = ResourceLocationUtils.fromNamespaceAndPath("lmft", "unknown_tag_id");
+        if (id == null) id = "lmft:unknown_tag_id";
 
         LOGGER.warn(PREFIX + "Couldn't load certain entries within the tag {}: {}",
             id,
@@ -129,6 +148,6 @@ public class LMFTCommon {
     }
 
     public static void setTagId(ResourceLocation id) {
-        CURRENT_LOADING_TAG_ENTRY.set(id);
+        CURRENT_LOADING_TAG_ENTRY.set(id.toString());
     }
 }

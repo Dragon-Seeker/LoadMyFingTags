@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[1,)"
+loaderVersion = "[37,)"
 #issueTrackerURL = ""
 license = "CC0-1.0"
 
@@ -11,20 +11,11 @@ authors = "Blodhgarm"
 description = '''
 Simple mod that makes Tag Loading less of a Pain
 '''
-logoFile = "assets/lmft/icon.png"
-[[mixins]]
-config = 'lmft-common.mixins.json'
-
-[[dependencies.lmft]]
-modId = "neoforge"
-mandatory = true
-versionRange = "[20,)"
-ordering = "NONE"
-side = "BOTH"
+logoFile = "icon.png"
 
 [[dependencies.lmft]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20.2,)"
+versionRange = "[1.17.1,)"
 ordering = "NONE"
 side = "BOTH"
