@@ -38,6 +38,9 @@ public class LMFTCommon {
 
     private static boolean hasBeenLoaded = false;
 
+    private static String cookedTagsMessage = "It seems that some tags are a bit 'cooked'. The logs will contain more info on what entries were not added to each tag.";
+    private static String cookedTagsLinkMessage = "Click me for more info about this feature.";
+
     static {
         init();
     }
@@ -95,10 +98,11 @@ public class LMFTCommon {
         entity.displayClientMessage(
             Component.empty()
                 .append(
-                    Component.literal(PREFIX + "It seems that some tags are a bit cooked. Look at the Logs for more details on broken functions. ")
+                    Component.literal(PREFIX)
+                        .append(Component.translatableWithFallback("lmft.cooked_tags_message", cookedTagsMessage))
                         .withStyle(ChatFormatting.RED, ChatFormatting.BOLD)
                 ).append(
-                    Component.literal("Click me for more info about this feature.")
+                    Component.translatableWithFallback("lmft.cooked_tags_link_message", cookedTagsLinkMessage)
                         .withStyle(ChatFormatting.AQUA)
                         .withStyle(style -> style.withClickEvent(new ClickEvent.OpenUrl(URI.create("https://github.com/Dragon-Seeker/LoadMyFingTags/blob/3961e898550c4d996199bea0fa408a61e87e8dba/info.md"))))
                 ),

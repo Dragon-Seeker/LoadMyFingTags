@@ -1,0 +1,4 @@
+{
+  "lmft.cooked_tags_message": "It seems that some tags are a bit 'cooked'. The logs will contain more info on what entries were not added to each tag.",
+  "lmft.cooked_tags_link_message": "Click me for more info about this feature."
+}
