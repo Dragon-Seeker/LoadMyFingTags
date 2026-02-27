@@ -3,20 +3,15 @@ package io.wispforest.lmft.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.logging.LogUtils;
 import io.wispforest.lmft.LMFTCommon;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagEntry;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagLoader;
-import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
-import java.util.Map;
 
 @Mixin(value = TagLoader.class, priority = 800)
 public abstract class TagGroupLoaderMixin<T> {
@@ -28,7 +23,7 @@ public abstract class TagGroupLoaderMixin<T> {
     }
 
     @Inject(method = { "method_51476", "lambda$build$6" }, at = @At("HEAD"), require = 1, allow = 1)
-    private void saveTagId(CallbackInfo ci, @Local(ordinal = 0) ResourceLocation id){
+    private void saveTagId(CallbackInfo ci, @Local(ordinal = 0, argsOnly = true) Identifier id){
         LMFTCommon.setTagId(id);
     }
 }

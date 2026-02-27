@@ -19,7 +19,6 @@
     "lmft-common.mixins.json"
   ],
   "depends": {
-    "fabric": "*",
     "minecraft": "~1.21"
   }
 }

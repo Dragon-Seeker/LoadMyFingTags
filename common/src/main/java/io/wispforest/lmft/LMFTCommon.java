@@ -8,7 +8,8 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.permissions.Permissions;
 import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
@@ -89,7 +90,7 @@ public class LMFTCommon {
     }
 
     public static void sendMessage(Player entity){
-        if (!areTagsCooked || disableIngameError || (showToOnlyPrivileged && entity.getPermissionLevel() <= 0)) return;
+        if (!areTagsCooked || disableIngameError || (showToOnlyPrivileged && entity.permissions().hasPermission(Permissions.COMMANDS_MODERATOR))) return;
 
         entity.displayClientMessage(
             Component.empty()
@@ -105,14 +106,14 @@ public class LMFTCommon {
         );
     }
 
-    private static final ThreadLocal<ResourceLocation> CURRENT_LOADING_TAG_ENTRY = ThreadLocal.withInitial(() -> ResourceLocationUtils.fromNamespaceAndPath("", ""));
+    private static final ThreadLocal<Identifier> CURRENT_LOADING_TAG_ENTRY = ThreadLocal.withInitial(() -> Identifier.fromNamespaceAndPath("", ""));
 
     public static void handleAndLogInvalidEntries(List<?> invalidEntries) {
         if(invalidEntries.isEmpty()) return;
 
         var id = CURRENT_LOADING_TAG_ENTRY.get();
 
-        if (id == null) id = ResourceLocationUtils.fromNamespaceAndPath("lmft", "unknown_tag_id");
+        if (id == null) id = Identifier.fromNamespaceAndPath("lmft", "unknown_tag_id");
 
         LOGGER.warn(PREFIX + "Couldn't load certain entries within the tag {}: {}",
             id,
@@ -128,7 +129,7 @@ public class LMFTCommon {
         areTagsCooked = false;
     }
 
-    public static void setTagId(ResourceLocation id) {
+    public static void setTagId(Identifier id) {
         CURRENT_LOADING_TAG_ENTRY.set(id);
     }
 }
